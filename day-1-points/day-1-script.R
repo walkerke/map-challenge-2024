@@ -40,7 +40,8 @@ write_rds(qt_min, "day-1-points/qt_locations.rds")
 qt_min <- read_rds("day-1-points/qt_locations.rds")
 
 # Map with mapgl / Mapbox GL JS
-qt_map <- mapboxgl(bounds = qt_min) |> 
+qt_map <- mapboxgl(bounds = qt_min, 
+  customAttribution = "Data source: Overture Maps") |> 
   # Add image to the sprite (logo I found on the web)
   add_image("qt-logo", "~/Downloads/QT.png") |>
   # Add a symbol layer with circle clustering using the image
@@ -59,5 +60,7 @@ qt_map <- mapboxgl(bounds = qt_min) |>
       text_color = "white"
     )
   )
+
+qt_map
 
 htmlwidgets::saveWidget(qt_map, "day-1-points/index.html")
