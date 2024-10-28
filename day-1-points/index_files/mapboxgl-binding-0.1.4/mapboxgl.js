@@ -100,7 +100,7 @@ HTMLWidgets.widget({
 
                             if (marker.popup) {
                                 mapMarker.setPopup(
-                                    new mapboxgl.Popup({ offset: 25 }).setText(
+                                    new mapboxgl.Popup({ offset: 25 }).setHTML(
                                         marker.popup,
                                     ),
                                 );
@@ -470,6 +470,22 @@ HTMLWidgets.widget({
                         });
                         map.addControl(scaleControl, x.scale_control.position);
                         map.controls.push(scaleControl);
+                    }
+
+                    // Add globe minimap if enabled
+                    if (x.globe_minimap && x.globe_minimap.enabled) {
+                        const globeMinimapOptions = {
+                            globeSize: x.globe_minimap.globe_size,
+                            landColor: x.globe_minimap.land_color,
+                            waterColor: x.globe_minimap.water_color,
+                            markerColor: x.globe_minimap.marker_color,
+                            markerSize: x.globe_minimap.marker_size,
+                        };
+                        const globeMinimap = new GlobeMinimap(
+                            globeMinimapOptions,
+                        );
+                        map.addControl(globeMinimap, x.globe_minimap.position);
+                        map.controls.push(globeMinimap);
                     }
 
                     // Add geocoder control if enabled
@@ -902,7 +918,9 @@ HTMLWidgets.widget({
 
 if (HTMLWidgets.shinyMode) {
     Shiny.addCustomMessageHandler("mapboxgl-proxy", function (data) {
-        var map = HTMLWidgets.find("#" + data.id).getMap();
+        var widget = HTMLWidgets.find("#" + data.id);
+        if (!widget) return;
+        var map = widget.getMap();
         if (map) {
             var message = data.message;
             if (message.type === "set_filter") {
@@ -1358,7 +1376,7 @@ if (HTMLWidgets.shinyMode) {
 
                     if (marker.popup) {
                         mapMarker.setPopup(
-                            new mapboxgl.Popup({ offset: 25 }).setText(
+                            new mapboxgl.Popup({ offset: 25 }).setHTML(
                                 marker.popup,
                             ),
                         );
