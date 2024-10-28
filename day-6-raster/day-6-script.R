@@ -17,6 +17,13 @@ raster_map <- maplibre(style = carto_style("positron"),
     id = "raster-layer",
     source = "raster",
     raster_opacity = 0.7
+  ) %>%
+  add_continuous_legend(
+    legend_title = "Elevation in Zion National Park",
+    values = c("1024m", "2892m"),
+    colors = viridisLite::viridis(100)
   )
 
 raster_map
+
+htmlwidgets::saveWidget(raster_map, "day-6-raster/index.html")
