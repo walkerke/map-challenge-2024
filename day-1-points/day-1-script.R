@@ -43,7 +43,7 @@ qt_min <- read_rds("day-1-points/qt_locations.rds")
 qt_map <- mapboxgl(bounds = qt_min, 
   customAttribution = "Data source: Overture Maps") |> 
   # Add image to the sprite (logo I found on the web)
-  add_image("qt-logo", "~/Downloads/QT.png") |>
+  add_image("qt-logo", "QT.png") |>
   # Add a symbol layer with circle clustering using the image
   add_symbol_layer(
     id = "local_icons",
