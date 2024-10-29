@@ -39,7 +39,7 @@ map1 <- mapboxgl(bounds = popdensity_00) %>%
       stops = c("#FFD580", "#FF5733")
     ),
     fill_extrusion_height = get_column("pop_density"),
-    fill_extrusion_opacity = 0.7
+    fill_extrusion_opacity = 0.9
   ) %>%
   add_continuous_legend(
     "Population density (people/sqmi)<br>2000 Census / 2018-22 ACS",
@@ -57,7 +57,7 @@ map2 <- mapboxgl(bounds = popdensity_22) %>%
       stops = c("#FFD580", "#FF5733")
     ),
     fill_extrusion_height = get_column("pop_density"),
-    fill_extrusion_opacity = 0.7
+    fill_extrusion_opacity = 0.9
   )
 
 comp <- compare(map1, map2)
