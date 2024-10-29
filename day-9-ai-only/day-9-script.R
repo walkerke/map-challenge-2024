@@ -3,6 +3,7 @@ library(sf)
 library(dplyr)
 library(maps)
 
+# I taught Claude how to use mapgl, and here's the map it made for me!
 # Load world map data
 data(world.cities, package = "maps")
 
@@ -55,3 +56,5 @@ m <- mapboxgl(style = mapbox_style("light")) %>%
 
 # Display the map
 m
+
+htmlwidgets::saveWidget(m, "day-9-ai-only/index.html")
