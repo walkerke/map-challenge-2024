@@ -20,4 +20,6 @@ arctic_map <- mapboxgl(style = mapbox_style("standard-satellite"), center = c(0,
     popup = "place_name"
   )
 
+arctic_map
+
 htmlwidgets::saveWidget(arctic_map, "day-11-arctic/index.html")

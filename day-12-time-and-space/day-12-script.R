@@ -35,15 +35,15 @@ map1 <- mapboxgl(bounds = popdensity_00) %>%
     source = popdensity_00,
     fill_extrusion_color = interpolate(
       "pop_density",
-      values = c(0, 18000),
+      values = c(0, 48000),
       stops = c("#FFD580", "#FF5733")
     ),
     fill_extrusion_height = get_column("pop_density"),
     fill_extrusion_opacity = 0.7
   ) %>%
   add_continuous_legend(
-    "Population density<br>2000 Census / 2018-22 ACS",
-    values = c("0", "18k"),
+    "Population density (people/sqmi)<br>2000 Census / 2018-22 ACS",
+    values = c("0k", "48k"),
     colors = c("#FFD580", "#FF5733")
   )
 
@@ -53,11 +53,15 @@ map2 <- mapboxgl(bounds = popdensity_22) %>%
     source = popdensity_22,
     fill_extrusion_color = interpolate(
       "pop_density",
-      values = c(0, 18000),
+      values = c(0, 48000),
       stops = c("#FFD580", "#FF5733")
     ),
     fill_extrusion_height = get_column("pop_density"),
     fill_extrusion_opacity = 0.7
   )
 
-compare(map1, map2)
+comp <- compare(map1, map2)
+
+comp
+
+htmlwidgets::saveWidget(comp, "day-12-time-and-space/index.html")
