@@ -9,4 +9,4 @@ mont_map <- mapboxgl(
 
 mont_map
 
-htmlwidgets::saveWidget(mont_map, "day-19-typography/index.html")
+htmlwidgets::saveWidget(mont_map, "day-19-typography/index.html", selfcontained = FALSE)

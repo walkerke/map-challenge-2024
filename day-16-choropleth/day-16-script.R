@@ -53,4 +53,4 @@ wfh_map <- mapboxgl(
 
 wfh_map
 
-htmlwidgets::saveWidget(wfh_map, "day-16-choropleth/index.html")
+htmlwidgets::saveWidget(wfh_map, "day-16-choropleth/index.html", selfcontained = FALSE)

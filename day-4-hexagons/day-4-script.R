@@ -43,7 +43,7 @@ hex_jobs_sf <- left_join(hex_sf, hex_medical_jobs, by = "h3_index")
 
 # Map in 3D
 hex_map <- mapboxgl(style = mapbox_style("light"), 
-customAttribution = "Data source: <a href='https://github.com/jamgreen/lehdr'>LODES / lehdr R pacakge</a>") %>%
+customAttribution = "Data source: <a href='https://github.com/jamgreen/lehdr'>LODES / lehdr R package</a>") %>%
   fit_bounds(hex_jobs_sf, pitch = 60, bearing = 30) %>%
   add_fill_extrusion_layer(
     id = "health-jobs",

@@ -36,7 +36,7 @@ manhattan_3d <- mapboxgl(center = c(-73.9652, 40.7803),
 
 manhattan_3d
 
-htmlwidgets::saveWidget(manhattan_3d, "day-18-3D/index.html")
+htmlwidgets::saveWidget(manhattan_3d, "day-18-3D/index.html", selfcontained = FALSE)
 
 
 
