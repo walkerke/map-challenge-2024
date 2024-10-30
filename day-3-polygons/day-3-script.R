@@ -133,4 +133,4 @@ floorplan <- mapboxgl(style = mapbox_style("light"),
 
 floorplan
 
-htmlwidgets::saveWidget(floorplan, "day-3-polygons/index.html")
+htmlwidgets::saveWidget(floorplan, "day-3-polygons/index.html", selfcontained = FALSE)

@@ -32,4 +32,4 @@ rivalry_map <- mapboxgl(
 
 rivalry_map
 
-htmlwidgets::saveWidget(rivalry_map, "day-2-lines/index.html")
+htmlwidgets::saveWidget(rivalry_map, "day-2-lines/index.html", selfcontained = FALSE)

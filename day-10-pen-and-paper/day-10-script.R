@@ -24,4 +24,4 @@ pen_map <- mapboxgl(style = "mapbox://styles/kwalkertcu/cm2kevzl7005401p7ghz2a62
 
 pen_map
 
-htmlwidgets::saveWidget(pen_map, "day-10-pen-and-paper/index.html")
+htmlwidgets::saveWidget(pen_map, "day-10-pen-and-paper/index.html", selfcontained = FALSE)

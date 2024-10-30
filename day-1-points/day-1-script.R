@@ -63,4 +63,4 @@ qt_map <- mapboxgl(bounds = qt_min,
 
 qt_map
 
-htmlwidgets::saveWidget(qt_map, "day-1-points/index.html")
+htmlwidgets::saveWidget(qt_map, "day-1-points/index.html", selfcontained = FALSE)

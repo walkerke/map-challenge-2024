@@ -51,4 +51,4 @@ baboon_path <- mapboxgl(
 baboon_path
 
 # Save the map
-htmlwidgets::saveWidget(baboon_path, "day-5-journey/index.html")
+htmlwidgets::saveWidget(baboon_path, "day-5-journey/index.html", selfcontained = FALSE)

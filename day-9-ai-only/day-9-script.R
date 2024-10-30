@@ -57,4 +57,4 @@ m <- mapboxgl(style = mapbox_style("light")) %>%
 # Display the map
 m
 
-htmlwidgets::saveWidget(m, "day-9-ai-only/index.html")
+htmlwidgets::saveWidget(m, "day-9-ai-only/index.html", selfcontained = FALSE)

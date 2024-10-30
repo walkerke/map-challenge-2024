@@ -65,4 +65,4 @@ yemen_map <- mapboxgl(style = mapbox_style("light"),
 
 yemen_map
 
-htmlwidgets::saveWidget(yemen_map, "day-8-hdx/index.html")
+htmlwidgets::saveWidget(yemen_map, "day-8-hdx/index.html", selfcontained = FALSE)

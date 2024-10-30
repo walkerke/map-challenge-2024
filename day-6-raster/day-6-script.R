@@ -26,4 +26,4 @@ raster_map <- maplibre(style = carto_style("positron"),
 
 raster_map
 
-htmlwidgets::saveWidget(raster_map, "day-6-raster/index.html")
+htmlwidgets::saveWidget(raster_map, "day-6-raster/index.html", selfcontained = FALSE)

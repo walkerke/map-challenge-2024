@@ -72,4 +72,4 @@ customAttribution = "Data source: <a href='https://github.com/jamgreen/lehdr'>LO
 
 hex_map
 
-htmlwidgets::saveWidget(hex_map, "day-4-hexagons/index.html")
+htmlwidgets::saveWidget(hex_map, "day-4-hexagons/index.html", selfcontained = FALSE)
