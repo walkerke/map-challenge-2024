@@ -22,7 +22,7 @@ You can view the maps at the links here:
 * [Day 15: My data](https://walkerke.shinyapps.io/day-15-my-data/)
 * [Day 16: Choropleth](https://walker-data.com/map-challenge-2024/day-16-choropleth)
 * [Day 17: Collaborative](https://walkerke.shinyapps.io/day-17-collaborative/)
-* [Day 18: 3D](https://walker-data.com/map-challenge-2024/day-18-3d)
+* [Day 18: 3D](https://walker-data.com/map-challenge-2024/day-18-3D)
 * [Day 19: Typography](https://walker-data.com/map-challenge-2024/day-19-typography)
 * [Day 20: OpenStreetMap](https://walker-data.com/map-challenge-2024/day-20-openstreetmap)
 * [Day 21: Conflict](https://walker-data.com/map-challenge-2024/day-21-conflict)
