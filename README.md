@@ -25,7 +25,7 @@ You can view the maps at the links here:
 * [Day 18: 3D](https://walker-data.com/map-challenge-2024/day-18-3D)
 * [Day 19: Typography](https://walker-data.com/map-challenge-2024/day-19-typography)
 * [Day 20: OpenStreetMap](https://walker-data.com/map-challenge-2024/day-20-openstreetmap)
-* [Day 21: Conflict](https://walker-data.com/map-challenge-2024/day-21-conflict)
+* [Day 21: Conflict](https://walkerke.shinyapps.io/day-21-conflict/)
 * [Day 22: 2 colors](https://walker-data.com/map-challenge-2024/day-22-2-colors)
 * [Day 23: Memory]()
 * [Day 24: Circular shapes](https://walker-data.com/map-challenge-2024/day-24-circular-shapes)

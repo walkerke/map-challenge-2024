@@ -1,12 +1,73 @@
+library(shiny)
 library(mapgl)
+library(magrittr)
 
-in_wv_map <- mapboxgl(
-  style = mapbox_style("light"),
-  center = c(75.3412, 33.2778),  
-  zoom = 6,
-  worldview = "IN"
+ui <- fluidPage(
+  tags$head(
+    tags$style(HTML("
+      body, html { height: 100%; margin: 0; padding: 0; }
+      #map { position: absolute; top: 0; bottom: 0; left: 0; right: 0; }
+    "))
+  ),
+  mapboxglOutput("map", height = "100vh"),
+  absolutePanel(
+    top = 10, right = 10, width = 250,
+    draggable = TRUE,
+    wellPanel(
+      style = "background: rgba(255, 255, 255, 0.8);",
+      p("Display administrative boundaries consistent with the following worldview:"),
+      radioButtons("worldview", "",
+                   choices = list("China" = "CN",
+                                  "India" = "IN",
+                                  "Japan" = "JP",
+                                  "United States" = "US"),
+                   selected = "US")
+    )
+  )
 )
 
-in_wv_map
+server <- function(input, output, session) {
+  output$map <- renderMapboxgl({
+    mapboxgl(
+      style = mapbox_style("light"),
+      center = c(88, 26),
+      zoom = 4,
+      access_token = "pk.eyJ1Ijoia3dhbGtlcnRjdSIsImEiOiJMRk9JSmRvIn0.l1y2jHZ6IARHM_rA1-X45A"
+    )
+  })
 
-htmlwidgets::saveWidget(in_wv_map, "day-21-conflict/index.html", selfcontained = FALSE)
+  observe({
+    mapboxgl_proxy("map") %>%
+      set_filter(
+        layer_id = "admin-0-boundary-disputed",
+        filter = list(
+          "all",
+          list("==", list("get", "disputed"), "true"),
+          list("==", list("get", "admin_level"), 0),
+          list("==", list("get", "maritime"), "false"),
+          list("match", list("get", "worldview"), list("all", input$worldview), TRUE, FALSE)
+        )
+      ) %>%
+      set_filter(
+        layer_id = "admin-0-boundary",
+        filter = list(
+          "all",
+          list("==", list("get", "admin_level"), 0),
+          list("==", list("get", "disputed"), "false"),
+          list("==", list("get", "maritime"), "false"),
+          list("match", list("get", "worldview"), list("all", input$worldview), TRUE, FALSE)
+        )
+      ) %>%
+      set_filter(
+        layer_id = "admin-0-boundary-bg",
+        filter = list(
+          "all",
+          list("==", list("get", "admin_level"), 0),
+          list("==", list("get", "maritime"), "false"),
+          list("match", list("get", "worldview"), list("all", input$worldview), TRUE, FALSE)
+        )
+      )
+  })
+}
+
+shinyApp(ui, server)
