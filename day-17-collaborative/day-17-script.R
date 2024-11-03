@@ -7,39 +7,25 @@ library(bslib)
 library(googledrive)
 
 # Set up Google Sheets authentication
+# You'll need to follow the steps / instructions here:
+# https://googlesheets4.tidyverse.org/articles/auth.html
+# https://gargle.r-lib.org/articles/non-interactive-auth.html#project-level-oauth-cache
 options(
     gargle_oauth_cache = "google_auth",
-    gargle_oauth_email = "kyle@walker-data.com"
+    gargle_oauth_email = "kyle@walker-data.com" # replace with your email
 )
-SHEET_ID <- "1wiEXx2VZ3OPjuyr-i0e4OB96a1LgZIPAllADSdyW-nI"
+SHEET_ID <- "YOUR_SHEET_ID"
 
 # Functions for reading/writing locations
 read_locations <- function() {
-    tryCatch(
-        {
-            locations <- read_sheet(SHEET_ID)
-            locations %>%
-                mutate(
-                    lng = as.numeric(lng),
-                    lat = as.numeric(lat),
-                    timestamp = as.POSIXct(timestamp)
-                )
-        },
-        error = function(e) {
-            data.frame(
-                lng = numeric(),
-                lat = numeric(),
-                timestamp = as.POSIXct(character())
-            )
-        }
-    )
+  read_sheet(SHEET_ID)
 }
 
 append_location <- function(lng, lat) {
     new_location <- data.frame(
         lng = lng,
         lat = lat,
-        timestamp = Sys.time()
+        timestamp = format(Sys.time(), "%Y-%m-%d %H:%M")
     )
     sheet_append(SHEET_ID, new_location)
     read_locations()
@@ -76,44 +62,25 @@ ui <- page_fillable(
     # Layout
     layout_sidebar(
         sidebar = sidebar(
-            title = "Visitor Map Controls",
             card(
                 card_header("Instructions"),
-                p("Drop a pin on the map to mark your location:"),
                 tags$ol(
                     tags$li("Drag the marker to your location"),
-                    tags$li("Or use the geolocate button (top-right) to find your position"),
                     tags$li("Click Submit to add your location")
                 ),
                 hr(),
-                actionButton("submit", "Submit Location",
+                actionButton("submit", "Submit",
                     class = "btn-lg btn-primary w-100",
                     icon = icon("map-pin")
-                )
-            ),
-            card(
-                card_header("Statistics"),
-                value_box(
-                    title = "Total Visitors",
-                    value = textOutput("visitorCount"),
-                    showcase = icon("users"),
-                    theme = "primary",
-                    height = "100px"
                 ),
-                value_box(
-                    title = "Last Visit",
-                    value = textOutput("lastVisitor"),
-                    showcase = icon("clock"),
-                    theme = "secondary",
-                    height = "100px"
-                )
+                htmlOutput("visitorCount"),
+                htmlOutput("lastVisitor")
             )
         ),
 
         # Main panel with map
         card(
             full_screen = TRUE,
-            card_header("Global Visitor Locations"),
             mapboxglOutput("map", height = "calc(100vh - 80px)")
         )
     )
@@ -134,7 +101,8 @@ server <- function(input, output, session) {
 
         mapboxgl(
             center = c(0, 0),
-            zoom = 1
+            zoom = 1,
+            access_token = "YOUR_TOKEN_HERE"
         ) %>%
             add_navigation_control() %>%
             add_geolocate_control() %>%
@@ -198,7 +166,7 @@ server <- function(input, output, session) {
     # Update visitor count
     output$visitorCount <- renderText({
         locations <- rv()
-        format(nrow(locations), big.mark = ",")
+        paste("Total visitors: ", nrow(locations))
     })
 
     # Show last visitor time
@@ -206,7 +174,7 @@ server <- function(input, output, session) {
         locations <- rv()
         if (nrow(locations) > 0) {
             last_time <- max(locations$timestamp)
-            format(last_time, "%Y-%m-%d\n%H:%M")
+            paste("Last visited: ", last_time)
         } else {
             "No visitors yet"
         }
