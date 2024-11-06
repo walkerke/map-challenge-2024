@@ -81,4 +81,4 @@ dorling_map <- mapboxgl(style = style, projection = "albers",
 
 dorling_map
 
-htmlwidgets::saveWidget(dorling_map, "day-24-circular-shapes/index.html")
+htmlwidgets::saveWidget(dorling_map, "day-24-circular-shapes/index.html", selfcontained = FALSE)

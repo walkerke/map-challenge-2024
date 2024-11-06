@@ -29,7 +29,7 @@ You can view the maps at the links here:
 * [Day 22: 2 colors](https://walker-data.com/map-challenge-2024/day-22-2-colors)
 * [Day 23: Memory]()
 * [Day 24: Circular shapes](https://walker-data.com/map-challenge-2024/day-24-circular-shapes)
-* [Day 25: Heat]()
+* [Day 25: Heat](https://walker-data.com/map-challenge-2024/day-25-heat)
 * [Day 26: Projections](https://walker-data.com/map-challenge-2024/day-26-projections)
 * [Day 27: Micromapping](https://walker-data.com/map-challenge-2024/day-27-micromapping/)
 * [Day 28: Blue planet]()
