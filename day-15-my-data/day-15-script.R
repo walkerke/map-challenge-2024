@@ -2,7 +2,7 @@ library(shiny)
 library(mapgl)
 library(mapboxapi)
 
-access_token <- "pk.eyJ1Ijoia3dhbGtlcnRjdSIsImEiOiJMRk9JSmRvIn0.l1y2jHZ6IARHM_rA1-X45A"
+access_token <- "YOUR_TOKEN_GOES_HERE"
 
 # Define locations
 locations <- list(
