@@ -32,7 +32,7 @@ server <- function(input, output, session) {
       style = mapbox_style("light"),
       center = c(88, 26),
       zoom = 4,
-      access_token = "pk.eyJ1Ijoia3dhbGtlcnRjdSIsImEiOiJMRk9JSmRvIn0.l1y2jHZ6IARHM_rA1-X45A"
+      access_token = "YOUR_TOKEN_GOES_HERE"
     )
   })
 
