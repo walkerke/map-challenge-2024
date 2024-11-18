@@ -104,8 +104,9 @@ ui <- page_navbar(
 
 server <- function(input, output, session) {
   output$map <- renderMapboxgl({
-    mapboxgl(style = maptiler_style("ocean"), bounds = pipelines,
-             customAttribution = '<a href="https://www.data.boem.gov/Main/Mapping.aspx">Data source: BOEM</a>') |>
+    mapboxgl(style = maptiler_style("ocean", api_key = "YOUR_MAPTILER_KEY"), bounds = pipelines,
+             customAttribution = '<a href="https://www.data.boem.gov/Main/Mapping.aspx">Data source: BOEM</a>',
+             access_token = "YOUR_MAPBOX_TOKEN") |>
       add_line_layer(id = "pipelines",
                      source = pipelines,
                      line_color = "#0077be",

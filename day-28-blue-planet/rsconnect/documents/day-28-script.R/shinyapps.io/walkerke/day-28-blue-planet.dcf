@@ -1,0 +1,13 @@
+name: day-28-blue-planet
+title: day-28-blue-planet
+username: walkerke
+account: walkerke
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13378715
+bundleId: 9382829
+url: https://walkerke.shinyapps.io/day-28-blue-planet/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: ppl_arcs.zip
