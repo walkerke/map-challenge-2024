@@ -30,4 +30,4 @@ tfr_map <- mapboxgl(style = carto_style("positron")) |>
 
 tfr_map
 
-htmlwidgets::saveWidget(tfr_map, "day-14-world-map/index.html")
+htmlwidgets::saveWidget(tfr_map, "day-14-world-map/index.html", selfcontained = FALSE)

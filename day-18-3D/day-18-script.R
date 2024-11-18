@@ -4,7 +4,7 @@ library(sf)
 library(dplyr)
 options(tigris_use_cache = TRUE)
 
-manhattan_blocks <- blocks(year = 2020, state = "NY", county = "New York") |>
+manhattan_blocks <- blocks(year = 2020, state = "NY", county = "New York") %>%
   dplyr::select(GEOID20, POP20) %>%
   erase_water() %>%
   dplyr::filter(sf::st_is(.$geometry, c("POLYGON", "MULTIPOLYGON")))

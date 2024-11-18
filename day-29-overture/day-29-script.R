@@ -23,7 +23,7 @@ sf_buildings <- buildings |>
   st_as_sf(crs = 4326) |> 
   mutate(height = ifelse(is.na(height), 8, height))
 
-mapboxgl(
+sf_map <- mapboxgl(
   style = mapbox_style("light"),
   center = c(-122.4657, 37.7548),
   zoom = 11.3,
@@ -36,15 +36,19 @@ mapboxgl(
     fill_extrusion_height = get_column("height"),
     fill_extrusion_color = interpolate(
       column = "height",
-      values = c(0, 54, 108, 163, 217, 326),
+      values = c(6, 54, 108, 163, 217, 326),
       stops = viridisLite::inferno(6, direction = -1)
     ),
     fill_extrusion_opacity = 0.5
   ) |> 
   add_legend(
     "Building heights in San Francisco",
-    values = c("0m", "135m", "326m"),
+    values = c("6m", "135m", "326m"),
     colors = viridisLite::inferno(6, direction = -1)
   )
+
+sf_map
+
+htmlwidgets::saveWidget(sf_map, "day-29-overture/index.html", selfcontained = FALSE)
 
 

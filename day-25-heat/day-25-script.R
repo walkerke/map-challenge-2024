@@ -17,7 +17,6 @@ tmmx_data <- getGridMET(
   endDate = "2024-11-04"
 )
 
-# Convert to SpatRaster and calculate max temperature
 tmmx_rast <- tmmx_data$daily_maximum_temperature
 
 # Convert temperature from Kelvin to Fahrenheit
