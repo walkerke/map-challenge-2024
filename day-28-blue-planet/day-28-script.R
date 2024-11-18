@@ -3,77 +3,136 @@ library(bslib)
 library(mapgl)
 library(sf)
 library(colourpicker)
+library(dplyr)
 
 pipelines <- st_read("ppl_arcs/ppl_arcs.shp")
 
+status_dict <- tibble::tribble(
+  ~status, ~STATUS_COD,
+  "ABANDONED AND COMBINED", "A/C",
+  "OUT AND COMBINED", "O/C",
+  "ABANDONED", "ABN",
+  "ACTIVE", "ACT",
+  "RELINQUISHED", "RELQ",
+  "REMOVED", "REM",
+  "PROPOSED", "PROP",
+  "RELINQUISHED AND COMBINED", "R/C",
+  "PROPOSE REMOVAL", "PREM",
+  "PROPOSE ABANDONMENT", "PABN",
+  "RELINQUISHED AND ABANDONED", "R/A",
+  "COMBINED", "COMB",
+  "RELINQUISHED AND REMOVED", "R/R",
+  "OUT OF SERVICE", "OUT",
+  "CANCELLED", "CNCL"
+)
+
+ # Product dictionary
+prod_dict <- tibble::tribble(
+  ~product, ~PROD_CODE,
+  "UMBILICAL LINE. USUALLY INCLUDES PNEUMATIC OR HYDRAULIC CONT", "UMB",
+  "GAS AND CONDENSATE (H2S)", "G/CH",
+  "METHANOL / GLYCOL", "METH",
+  "PIPELINE USED AS A PROTECTIVE CASING (CSNG) FOR ANOTHER PIPELINE", "CSNG",
+  "NATURAL GAS ENHANCED RECOVERY", "NGER",
+  "TEST", "TEST",
+  "WATER", "H2O",
+  "PROCESSED GAS WITH TRACE LEVELS OF HYDROGEN SULFIDE", "GASH",
+  "CONDENSATE OR DISTILLATE TRANSPORTED DOWNSTREAM OF FIRST PRO", "COND",
+  "GAS INJECTION", "INJ",
+  "CORROSION INHIBITOR OR OTHER CHEMICALS", "CHEM",
+  "SPARE", "SPRE",
+  "LIQUID GAS ENHANCED RECOVERY", "LGER",
+  "RENEWABLE ENERGY POWER CABLE", "CBLR",
+  "GAS LIFT", "LIFT",
+  "CARBON DIOXIDE (SUPPORT ACTIVITY LEASE)", "CO2",
+  "PRESSURIZED WATER (RENEWABLE ENERGY)", "PWTR",
+  "OIL AND WATER TRANSPORTED AFTER FIRST PROCESSING", "O/W",
+  "SERVICE OR UTILITY LINE USED FOR PIGGING AND PIPELINE MAINTE", "SERV",
+  "SUPPLY GAS", "SPLY",
+  "POWER CABLE", "CBLP",
+  "OIL TRANSPORTED AFTER FIRST PROCESSING", "OIL",
+  "PNEUMATIC", "AIR",
+  "PROCESSED OIL WITH TRACE LEVELS OF HYDROGEN SULFIDE", "OILH",
+  "BULK OIL - FULL WELL STREAM PRODUCTION FROM OIL WELL(S) PRIO", "BLKO",
+  "BULK GAS - FULL WELL STREAM PRODUCTION FROM GAS WELL(S) PRIO", "BLKG",
+  "A NON-UMBILICAL CABLE SUCH AS FIBER OPTIC/COMMUNICATIONS", "CBLC",
+  "ELECTRICAL UMBILICAL", "UMBE",
+  "GAS AND CONDENSATE SERVICE AFTER FIRST PROCESSING", "G/C",
+  "GAS AND OIL (H2S)", "G/OH",
+  "HYDRAULIC UMBILICAL", "UMBH",
+  "GAS AND OIL SERVICE AFTER FIRST PROCESSING", "G/O",
+  "CHEMICAL UMBILICAL", "UMBC",
+  "GAS TRANSPORTED AFTER FIRST PROCESSING", "GAS",
+  "TOW ROUTE ONLY - NOT A PIPELINE", "TOW",
+  "ACID", "ACID",
+  "LIQUID PROPANE", "LPRO",
+  "BULK GAS WITH TRACE LEVELS OF HYDROGEN SULFIDE", "BLGH"
+)
+
+pipelines <- pipelines |>
+  left_join(prod_dict, by = "PROD_CODE") |>
+  left_join(status_dict, by = "STATUS_COD")
+
+
+ pipelines$popup_text <- paste0(
+  "<b>Pipeline Details</b><br>",
+  "Size: ", ifelse(!is.na(pipelines$PPL_SIZE_C),
+    pipelines$PPL_SIZE_C, "Unknown"), " inches<br>",
+  "Product: ", pipelines$product, "<br>",
+  "Status: ", pipelines$status, "<br>",
+  "Company: ", pipelines$SDE_COMPAN, "<br>",
+  "Length: ", round(pipelines$SEG_LENGTH, 0), " feet<br>"
+ )
+
 ui <- page_navbar(
   theme = bs_theme(bootswatch = "cerulean"),
-  title = "Blue Planet: Pipelines in the Gulf of Mexico",
+  title = "Pipelines in the Gulf of Mexico",
   sidebar = sidebar(
     colourInput("color", "Select a pipeline color", value = "#0077be"),
     sliderInput("opacity", "Pipeline opacity", min = 0, max = 1, value = 0.7, step = 0.1),
-    selectInput("status", "Pipeline Status", 
-                choices = c("All", unique(pipelines$STATUS_COD)),
-                selected = "All"),
-    selectInput("prod_code", "Product Type",
-                choices = c("All", unique(pipelines$PROD_CODE)),
-                selected = "All"),
-    sliderInput("size", "Minimum pipeline size", 
-                min = 0, max = max(as.numeric(pipelines$PPL_SIZE_C), na.rm = TRUE), 
-                value = 0, step = 1)
+    sliderInput("size", "Minimum pipeline diameter (inches)",
+              min = 0,
+              max = 54,
+              value = 0,
+              step = 0.5)
   ),
   card(
     full_screen = TRUE,
-    maplibreOutput("map")
+    mapboxglOutput("map")
   )
 )
 
 server <- function(input, output, session) {
-  output$map <- renderMaplibre({
-    maplibre(style = maptiler_style("ocean"), bounds = pipelines, 
+  output$map <- renderMapboxgl({
+    mapboxgl(style = maptiler_style("ocean"), bounds = pipelines,
              customAttribution = '<a href="https://www.data.boem.gov/Main/Mapping.aspx">Data source: BOEM</a>') |>
       add_line_layer(id = "pipelines",
                      source = pipelines,
                      line_color = "#0077be",
                      line_opacity = 0.7,
-                     line_width = list("get", "PPL_SIZE_C"))
+                     line_width = 3,
+                     hover_options = list(
+                       line_color = "yellow",
+                       line_width = 7
+                     ),
+                     popup = "popup_text")
   })
-  
+
   observeEvent(input$color, {
-    maplibre_proxy("map") |>
+    mapboxgl_proxy("map") |>
       set_paint_property("pipelines", "line-color", input$color)
   })
-  
+
   observeEvent(input$opacity, {
-    maplibre_proxy("map") |>
+    mapboxgl_proxy("map") |>
       set_paint_property("pipelines", "line-opacity", input$opacity)
   })
-  
-observeEvent(input$status, {
-  status_filter <- if(input$status != "All") {
-    list("==", list("get", "STATUS_COD"), input$status)
-  } else {
-    list(">", 1, 0)  # This is always true, effectively no filter
-  }
-  maplibre_proxy("map") |> 
-    set_filter("pipelines", status_filter)
-})
 
-observeEvent(input$prod_code, {
-  prod_code_filter <- if(input$prod_code != "All") {
-    list("==", list("get", "PROD_CODE"), input$prod_code)
-  } else {
-    list(">", 1, 0)  # This is always true, effectively no filter
-  }
-  
-  maplibre_proxy("map") |> 
-    set_filter("pipelines", prod_code_filter)
-})
 
 observeEvent(input$size, {
   size_filter <- list(">=", list("to-number", list("get", "PPL_SIZE_C")), input$size)
-  
-  maplibre_proxy("map") |> 
+
+  mapboxgl_proxy("map") |>
     set_filter("pipelines", size_filter)
 })
 }
