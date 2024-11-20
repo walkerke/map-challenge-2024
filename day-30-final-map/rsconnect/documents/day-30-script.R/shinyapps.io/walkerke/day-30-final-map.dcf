@@ -1,0 +1,13 @@
+name: day-30-final-map
+title: day-30-final-map
+username: walkerke
+account: walkerke
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 13379357
+bundleId: 9388558
+url: https://walkerke.shinyapps.io/day-30-final-map/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: day-30-script-debug.R
