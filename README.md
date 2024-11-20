@@ -33,8 +33,8 @@ You can view the maps at the links here:
 * [Day 26: Projections](https://walker-data.com/map-challenge-2024/day-26-projections)
 * [Day 27: Micromapping](https://walker-data.com/map-challenge-2024/day-27-micromapping/)
 * [Day 28: Blue planet](https://walkerke.shinyapps.io/day-28-blue-planet/)
-* [Day 29: Overture](https://walker-data.com/map-challenge-2024/day-27-overture/)
-* [Day 30: The final map]()
+* [Day 29: Overture](https://walker-data.com/map-challenge-2024/day-29-overture/)
+* [Day 30: The final map](https://walkerke.shinyapps.io/day-30-final-map)
 
 Want guided training on how to make maps like these and much more?  The entire month of November 2024, I'm offering all of my trainings at 50% off!
 

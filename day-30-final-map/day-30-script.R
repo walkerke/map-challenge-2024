@@ -3,7 +3,7 @@ library(shinyMobile)
 library(mapgl)
 library(mapboxapi)
 
-mb_token <- "pk.eyJ1Ijoia3dhbGtlcnRjdSIsImEiOiJMRk9JSmRvIn0.l1y2jHZ6IARHM_rA1-X45A"
+mb_token <- "YOUR_TOKEN_HERE"
 
 shinyApp(
   ui = f7Page(
