@@ -5,7 +5,7 @@ library(dplyr)
 library(mapgl) # remotes::install_github("walkerke/mapgl")
 library(tigris)
 
-st <- "FL"
+st <- "TX"
 
 # Get boundary
 target_state <- states(resolution = "20m") %>%
@@ -51,6 +51,6 @@ heat_map <- mapboxgl(
 
 heat_map
 
-htmlwidgets::saveWidget(heat_map, "day-25-heat/day-25-heat-map-raster.html", selfcontained = TRUE)
+htmlwidgets::saveWidget(heat_map, "day-25-heat/day-25-heat-map-raster.html", selfcontained = FALSE)
 
 
