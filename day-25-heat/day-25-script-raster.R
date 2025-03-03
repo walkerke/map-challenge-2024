@@ -2,7 +2,7 @@ library(climateR)
 library(terra)
 library(sf)
 library(dplyr)
-library(mapgl)
+library(mapgl) # remotes::install_github("walkerke/mapgl")
 library(tigris)
 
 # Get Texas boundary
